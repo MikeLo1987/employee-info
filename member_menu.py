@@ -5,7 +5,7 @@ Created on Mon Jul  8 20:13:41 2024
 @author: thewh
 """
 
-import hashlib, mysql
+import hashlib, mysql, taipei_metro, hualien1, hualien2
 
 def myindex():
     print("會員登入系統")
@@ -16,65 +16,75 @@ def myindex():
 
 def myindex2():
     print('-'*20)
-    print('1.查詢會員資料')
-    print('2.修改會員資料')
-    print('3.刪除帳號')
-    print('4.離開')
+    print('1.台北捷運票價查詢')
+    print('2.花蓮縣避難地點')
+    print('3.花蓮縣提供流感疫苗之院所')
+    print('4.會員資料')
+    print('5.離開')
 
 def myindex3():
     print('-'*20)
-    print('1.修改聯絡電話')
-    print('2.修改地址')
-    print('3.修改電子郵件')
-    print('4.修改密碼')
-    print('5.離開')
+    print('1.查詢會員資料')
+    print('2.修改聯絡電話')
+    print('3.修改地址')
+    print('4.修改電子郵件')
+    print('5.修改密碼')
+    print('6.刪除帳號')
+    print('7.離開')
 
 def mymenu():
     while True:
         myindex()
         print()
-        num = int(input('請輸入您要執行的動作：'))
-        if num == 1:
+        n = int(input('請輸入號碼來執行功能：'))
+        if n == 1:
             #print('登入功能')
             login()
-        elif num == 2:
+        elif n == 2:
             #print('註冊功能')
             sign_up()
-        elif num == 3:
+        elif n == 3:
             break
         
 def mymenu2():
     while True:
         myindex2()
         print()
-        num = int(input('請輸入您要執行的動作：'))
-        if num == 1:
-            print(mysql.select(account))
-        elif num == 2:
+        n = int(input('請輸入號碼來執行功能：'))
+        if n == 1:
+            taipei_metro.menu()
+        elif n == 2:
+            hualien1.menu()
+        elif n == 3:
+            hualien2.menu()
+        elif n == 4:
             mymenu3()
-        elif num == 3:
-            delete()
-        elif num == 4:
+        elif n == 5:
             break
 
 def mymenu3():
     while True:
         myindex3()
         print()
-        n = int(input("請輸入要修改的資料："))
+        n = int(input("請輸入號碼來執行功能："))
         if n == 1:
+            #查詢會員資料
+            print(mysql.select(account))
+        elif n == 2:
             #修改聯絡電話
             update_member_info(1)
-        elif n == 2:
+        elif n == 3:
             #修改地址
             update_member_info(2)
-        elif n == 3:
+        elif n == 4:
             #修改電子郵件
             update_member_info(3)
-        elif n == 4:
+        elif n == 5:
             #修改密碼
             update_member_info(4)
-        elif n == 5:
+        elif n == 6:
+            delete()            
+        elif n == 7:
             break
 
 def login():
@@ -177,6 +187,7 @@ def update_member_info(option):
         
         elif option == 4:
             pwd = input('請輸入新密碼: ')
+            #待辦：新密碼不可為空白
             md5_pwd = md5(pwd)
             mysql.update(4, account, md5_pwd)
             print('密碼修改成功，請使用新密碼重新登入。')
